@@ -1,0 +1,16 @@
+<%- include('partials/header', {title:'Applications', active}) %>
+<h1 class="page-title">Applications</h1>
+<p class="page-sub">All submitted loan applications.</p>
+<div class="card-box"><div class="p-3 table-responsive">
+<table class="table align-middle mb-0">
+  <thead><tr><th>#</th><th>Date</th><th>Name</th><th>Purpose</th><th>Amount</th><th>Credit</th><th>Probability</th><th>Status</th></tr></thead>
+  <tbody>
+  <% if (!rows.length) { %><tr><td colspan="8" class="text-center text-muted py-4">No applications yet.</td></tr><% } %>
+  <% rows.forEach(r => { %>
+    <tr><td><%= r.id %></td><td><%= new Date(r.date).toLocaleDateString('en-IN') %></td><td><%= r.name %></td>
+    <td><%= r.purpose %></td><td>₹<%= r.loan_amount.toLocaleString('en-IN') %></td><td><%= r.credit_score %></td>
+    <td><%= Math.round(r.probability*100) %>%</td>
+    <td><span class="badge <%= r.approved?'text-bg-success':'text-bg-danger' %>"><%= r.approved?'Approved':'Rejected' %></span></td></tr>
+  <% }) %>
+  </tbody></table></div></div>
+<%- include('partials/footer') %>

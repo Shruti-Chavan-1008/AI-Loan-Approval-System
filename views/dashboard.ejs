@@ -1,0 +1,25 @@
+<%- include('partials/header', {title:'Dashboard', active}) %>
+<h1 class="page-title">Dashboard</h1>
+<p class="page-sub">Overview of loan applications.</p>
+<div class="row g-3 mb-4">
+  <div class="col-md-3"><div class="stat"><span>Total Applications</span><b><%= stats.total %></b></div></div>
+  <div class="col-md-3"><div class="stat ok"><span>Approved</span><b><%= stats.approved %></b></div></div>
+  <div class="col-md-3"><div class="stat bad"><span>Rejected</span><b><%= stats.rejected %></b></div></div>
+  <div class="col-md-3"><div class="stat"><span>Approval Rate</span><b><%= stats.rate %>%</b></div></div>
+</div>
+<div class="card-box">
+  <div class="card-head">Recent Applications</div>
+  <div class="p-3 table-responsive">
+    <table class="table align-middle mb-0">
+      <thead><tr><th>Name</th><th>Purpose</th><th>Amount</th><th>Status</th></tr></thead>
+      <tbody>
+      <% if (!recent.length) { %><tr><td colspan="4" class="text-center text-muted py-4">No applications yet. <a href="/apply">Apply now</a></td></tr><% } %>
+      <% recent.forEach(r => { %>
+        <tr><td><%= r.name %></td><td><%= r.purpose %></td><td>₹<%= r.loan_amount.toLocaleString('en-IN') %></td>
+        <td><span class="badge <%= r.approved?'text-bg-success':'text-bg-danger' %>"><%= r.approved?'Approved':'Rejected' %></span></td></tr>
+      <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%- include('partials/footer') %>
